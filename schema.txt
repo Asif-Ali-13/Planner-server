@@ -22,3 +22,13 @@ Table todos {
   created_at timestamp [default: `now()`]
   updated_at timestamp [default: `now()`]
 }
+
+Table reminders {
+  _id ObjectId [primary key]
+  todo_id ObjectId [not null, ref: > todos._id]  // Links to the associated todo
+  reminder_date date [not null]
+  reminder_time time [not null]
+  message text  // Optional message for the reminder
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
