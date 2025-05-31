@@ -1,0 +1,24 @@
+
+Table users {
+  _id ObjectId [primary key]
+  name varchar(255) [not null, unique]
+  email varchar(255) [not null, unique]
+  password varchar(255) [not null]
+  avatar string 
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table todos {
+  _id ObjectId [primary key]
+  title varchar(255) [not null]
+  description text
+  dueDate date
+  priority enum('Low', 'Medium', 'High') [default: 'Medium']
+  category enum('Personal', 'Work', 'Finance', 'Grocery', 'Gym', 'Health', 'Travel') [default: 'Personal']
+  completed boolean [default: false]
+  completedDate timestamp 
+  user_id ObjectId [not null, ref: > users._id]  // Foreign key to associate todo with a user
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
