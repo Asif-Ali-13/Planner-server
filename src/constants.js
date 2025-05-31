@@ -1,1 +1,1 @@
-DB_NAME = 'taskFlow';
+export const DB_NAME = 'taskFlow';
