@@ -9,12 +9,12 @@ const todoSchema = new Schema({
         type: String,
     },
     dueDate: {
-        type: Date | null,
+        type: Date,
         default: null,
     },
     priority: {
         type: String,
-        enum: ['Low', 'Medium', 'High'],
+        enum: ['low', 'medium', 'high'],
         default: 'Medium',
     },
     category: {
@@ -27,7 +27,7 @@ const todoSchema = new Schema({
         default: false,
     },
     completedDate: {
-        type: Date | null,
+        type: Date,
         default: null,
     },
     user_id: {
