@@ -34,6 +34,11 @@ const todoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
+    },
+    order: {
+        type: Number,
+        default: 0,
+        required: true,
     }
 }, { timestamps: true });
 
