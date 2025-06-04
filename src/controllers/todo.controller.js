@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 export const getAllTodos = asyncHandler(async (req, res) => {
     const userId = req.user._id;
-    if(!userId) throw new ApiError("User not found", 401);
+    if(!userId) throw new ApiError(400, "User not found");
 
     const todos = await Todo.find({user_id: userId});
     return res.status(200).json(new ApiResponse(201, todos, "Todos fetched successfully"));
