@@ -25,7 +25,12 @@ export const signUpUser = asyncHandler(async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) throw new ApiError(400, "User already exists");
 
-    const user = await User.create({ username, email, password });
+    const defautAvatar = {
+        url: "https://www.gravatar.com/avatar/0?d=mp",
+        publicId: "defaultAvatar"
+    }
+
+    const user = await User.create({ username, email, password, avatar: defautAvatar });
     if (!user) throw new ApiError(500, "Error creating user");
 
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
