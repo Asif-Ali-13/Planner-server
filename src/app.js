@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(express.static('public'));
 app.use(cookieParser());
 
+// just for checking the backend is running
+app.get("/", (req, res) => res.send("Backend Running"));
+
 // routes
 import { userRoutes } from './routes/user.route.js';
 import { todoRoutes } from './routes/todo.route.js';
