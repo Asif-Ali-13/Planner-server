@@ -22,7 +22,10 @@ const userSchema = new Schema({
     },
     avatar: {
         type: {
-            url: String,
+            url: {
+                type: String,
+                default: "https://www.gravatar.com/avatar/0?d=mp"
+            },
             publicId: String,
         },
     },
