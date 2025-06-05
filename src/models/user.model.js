@@ -21,7 +21,10 @@ const userSchema = new Schema({
         trim: true,
     },
     avatar: {
-        type: String,
+        type: {
+            url: String,
+            publicId: String,
+        },
     },
     refreshToken: {
         type: String,
