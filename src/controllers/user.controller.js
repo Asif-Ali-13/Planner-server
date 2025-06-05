@@ -2,6 +2,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { User } from '../models/user.model.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { ApiError } from '../utils/ApiError.js';
+import { deleteOnCloudinary, uploadOnCloudinary } from '../utils/cloudinary.js';
 
 const generateAccessAndRefreshToken = async(userId) => {
     try {
@@ -76,3 +77,28 @@ export const signOutUser = asyncHandler(async (req, res) => {
         .clearCookie("refreshToken", options)
         .json(new ApiResponse(200, null, "User loggedOut successfully"));
 });
+
+export const updateUserAvatar = asyncHandler( async (req, res) => {
+    const avatarLocalPath = req.file?.path;
+    if(!avatarLocalPath) throw new ApiError(400, "Avatar file is missing");
+
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    if(!avatar) throw new ApiError(500, "Error while uploading Avatar");
+    
+    if(req.user.avatar?.publicId) await deleteOnCloudinary(req.user.avatar.publicId);
+
+    const user = await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set: {
+                avatar: {
+                    url: avatar.url,
+                    publicId: avatar.public_id
+                }
+            }
+        },
+        { new: true }
+    ).select("-password");
+
+    return res.status(200).json(new ApiResponse(200, user, "Avatar Updated"));
+})
