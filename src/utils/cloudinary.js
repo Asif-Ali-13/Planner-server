@@ -17,7 +17,10 @@ export const uploadOnCloudinary = async (localFilePath) => {
         })
         // file has been uploaded successfully 
         fs.unlinkSync(localFilePath);
-        return uploadResponse;
+        return {
+            url: uploadResponse.secure_url,
+            public_id: uploadResponse.public_id
+        }
     } catch (error) {
         fs.unlinkSync(localFilePath); // remove the locally saved temp files 
     }
